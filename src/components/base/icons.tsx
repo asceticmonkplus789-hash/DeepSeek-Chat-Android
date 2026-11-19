@@ -1,19 +1,3 @@
-export const IconStyleClassicOutline16 = () => (
-  <svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx={8} cy={8} r={5.5} stroke="currentColor" strokeWidth={1.5} />
-    <circle cx={8} cy={8} r={2.5} fill="currentColor" />
-  </svg>
-)
-
-export const IconStyleLivelyOutline16 = () => (
-  <svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M8 1L9.45 6.55L15 8L9.45 9.45L8 15L6.55 9.45L1 8L6.55 6.55L8 1Z"
-      fill="currentColor"
-    />
-  </svg>
-)
-
 export const IconCheckOutline16 = () => (
   <svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path

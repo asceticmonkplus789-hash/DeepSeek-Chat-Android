@@ -118,6 +118,12 @@
   transition: opacity var(--ds-transition-duration) var(--ds-ease-in-out);
 }
 
+@media (hover: none) {
+  .actions {
+    opacity: 1;
+  }
+}
+
 .alwaysShow {
   opacity: 1;
 }

@@ -261,11 +261,6 @@
   width: 300px;
   max-width: calc(100vw - 48px);
 
-  [data-ds-ui-style='lively'] & {
-    border-radius: 0 28px 28px 0;
-    overflow: hidden;
-  }
-
   .listWrap {
     margin-top: 16px;
   }

@@ -1,7 +1,7 @@
 import { useSyncExternalStore } from 'react'
 import { StatusBar, Style } from '@capacitor/status-bar'
 import { isNative } from '../services/capacitor.js'
-import { useSettings, type ThemePreference, type UiStyle } from '../services/settings.js'
+import { useSettings, type ThemePreference } from '../services/settings.js'
 
 export type Theme = 'light' | 'dark'
 
@@ -56,7 +56,6 @@ const syncStatusBar = (theme: Theme) => {
 
 /**
  * 在短窗口内让全页颜色平滑过渡，再恢复各组件的常规过渡。
- * 主题与界面风格切换共用，避免生硬跳变。
  */
 const withColorTransition = (apply: () => void) => {
   const body = document.body
@@ -87,19 +86,7 @@ const applyTheme = (theme: Theme) => {
   syncStatusBar(theme)
 }
 
-/** 应用界面风格（官方简洁 / 现代活泼），以 data 属性驱动 CSS 变量覆盖。 */
-const applyUiStyle = (uiStyle: UiStyle) => {
-  withColorTransition(() => {
-    if (uiStyle === 'lively') {
-      document.body.setAttribute('data-ds-ui-style', 'lively')
-    } else {
-      document.body.removeAttribute('data-ds-ui-style')
-    }
-  })
-}
-
 let appliedTheme: Theme | null = null
-let appliedUiStyle: UiStyle | null = null
 
 const syncTheme = () => {
   const theme = resolveTheme(useSettings.getState().themePreference, getOsTheme())
@@ -109,18 +96,9 @@ const syncTheme = () => {
   }
 }
 
-const syncUiStyle = () => {
-  const uiStyle = useSettings.getState().uiStyle
-  if (uiStyle !== appliedUiStyle) {
-    appliedUiStyle = uiStyle
-    applyUiStyle(uiStyle)
-  }
-}
-
-/** 首屏渲染前同步应用一次，之后随主题与风格设置及系统深浅色变化更新 */
+/** 首屏渲染前同步应用一次，之后随主题设置及系统深浅色变化更新 */
 export const setupTheme = () => {
   syncTheme()
-  syncUiStyle()
   if (document.readyState !== 'complete') {
     window.addEventListener(
       'load',
@@ -132,8 +110,5 @@ export const setupTheme = () => {
     )
   }
   query.addEventListener('change', syncTheme)
-  useSettings.subscribe(() => {
-    syncTheme()
-    syncUiStyle()
-  })
+  useSettings.subscribe(syncTheme)
 }

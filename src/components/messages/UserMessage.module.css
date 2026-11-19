@@ -66,6 +66,12 @@
   }
 }
 
+@media (hover: none) {
+  .actions {
+    opacity: 1;
+  }
+}
+
 .alwaysShow {
   opacity: 1;
 }

@@ -7,15 +7,11 @@ export type Locale = 'zh-CN' | 'en-US'
 /** 主题偏好；默认跟随系统 */
 export type ThemePreference = 'light' | 'dark' | 'system'
 
-/** 界面风格；默认官方简洁风 */
-export type UiStyle = 'classic' | 'lively'
-
-/** 本机设置，存 localStorage：API Key、语言、主题、界面风格、位置、朗读音色、深度思考与智能搜索开关、侧边栏收起状态 */
+/** 本机设置，存 localStorage：API Key、语言、主题、位置、朗读音色、深度思考与智能搜索开关、侧边栏收起状态 */
 type Settings = {
   apiKey: string | null
   locale: Locale
   themePreference: ThemePreference
-  uiStyle: UiStyle
   location: UserLocation | null
   ttsVoice: TtsVoice
   thinking: boolean
@@ -28,7 +24,6 @@ const KEYS = {
   locale: 'chat-demo:locale',
   location: 'chat-demo:location',
   themePreference: 'chat-demo:theme-preference',
-  uiStyle: 'chat-demo:ui-style',
   ttsVoice: 'chat-demo:tts-voice',
   thinking: 'chat-demo:thinking',
   search: 'chat-demo:search',
@@ -92,15 +87,11 @@ const initialThemePreference = (): ThemePreference => {
 /** 未保存过时使用服务端默认音色 stella（海星） */
 const initialTtsVoice = (): TtsVoice => (read(KEYS.ttsVoice) === 'tide' ? 'tide' : 'stella')
 
-/** 未保存过时使用官方简洁风 */
-const initialUiStyle = (): UiStyle => (read(KEYS.uiStyle) === 'lively' ? 'lively' : 'classic')
-
 export const useSettings = create<Settings>(() => ({
   apiKey: read(KEYS.apiKey),
   locale: initialLocale(),
   location: initialLocation(),
   themePreference: initialThemePreference(),
-  uiStyle: initialUiStyle(),
   ttsVoice: initialTtsVoice(),
   thinking: read(KEYS.thinking) === 'true',
   search: read(KEYS.search) === 'true',
@@ -121,11 +112,6 @@ export const setLocation = (value: UserLocation | null) => {
 export const setThemePreference = (themePreference: ThemePreference) => {
   write(KEYS.themePreference, themePreference)
   useSettings.setState({ themePreference })
-}
-
-export const setUiStyle = (uiStyle: UiStyle) => {
-  write(KEYS.uiStyle, uiStyle)
-  useSettings.setState({ uiStyle })
 }
 
 export const setTtsVoice = (ttsVoice: TtsVoice) => {
