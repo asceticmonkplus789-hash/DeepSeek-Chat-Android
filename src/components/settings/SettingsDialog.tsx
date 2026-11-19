@@ -7,6 +7,8 @@ import {
   IconFollowsystemOutline16,
   IconLightOutline16,
   IconSettingsOutline16,
+  IconStyleClassicOutline16,
+  IconStyleLivelyOutline16,
   IconUploadOutline14,
 } from '../base/icons.js'
 import {
@@ -24,8 +26,10 @@ import {
   setLocation,
   setThemePreference,
   setTtsVoice,
+  setUiStyle,
   useSettings,
   type ThemePreference,
+  type UiStyle,
 } from '../../services/settings.js'
 import { useTranslate, type TranslationKey, type TranslationMessage } from '../../i18n/index.js'
 import { Button } from '../base/Button.js'
@@ -97,6 +101,7 @@ const SettingsContent = () => {
           {section === 'general' ? (
             <>
               <ThemeSetting />
+              <UiStyleSetting />
               <LocaleSetting />
               <TtsVoiceSetting />
               <LocationSetting />
@@ -383,6 +388,41 @@ const ThemeSetting = () => {
               themePreference === option.value && styles.themeOptionSelected
             )}
             onClick={() => setThemePreference(option.value)}
+          >
+            {option.icon}
+            {t(option.label)}
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+const styleOptions: { value: UiStyle; label: TranslationKey; icon: ReactNode }[] = [
+  { value: 'classic', label: 'settingsUiStyleClassic', icon: <IconStyleClassicOutline16 /> },
+  { value: 'lively', label: 'settingsUiStyleLively', icon: <IconStyleLivelyOutline16 /> },
+]
+
+/** 界面风格：官方简洁 / 现代活泼，即时生效并记住选择 */
+const UiStyleSetting = () => {
+  const t = useTranslate()
+  const uiStyle = useSettings((state) => state.uiStyle)
+  const label = t('settingsUiStyle')
+  return (
+    <div className={styles.theme}>
+      {label}
+      <div role="radiogroup" aria-label={label} className={styles.themeOptions}>
+        {styleOptions.map((option) => (
+          <button
+            key={option.value}
+            type="button"
+            role="radio"
+            aria-checked={uiStyle === option.value}
+            className={clsx(
+              styles.themeOption,
+              uiStyle === option.value && styles.themeOptionSelected
+            )}
+            onClick={() => setUiStyle(option.value)}
           >
             {option.icon}
             {t(option.label)}

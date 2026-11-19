@@ -13,6 +13,9 @@
     "format": "oxfmt --write ."
   },
   "dependencies": {
+    "@capacitor/app": "6.0.3",
+    "@capacitor/core": "6.2.0",
+    "@capacitor/status-bar": "6.0.3",
     "@types/katex": "^0.16.5",
     "@types/mdast": "~4.0.3",
     "@types/prismjs": "^1.26.1",

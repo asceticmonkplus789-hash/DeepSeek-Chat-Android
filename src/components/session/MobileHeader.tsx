@@ -1,5 +1,6 @@
 import { IconMenuOutline20, IconNewChatOutline20 } from '../base/icons.js'
 import { useTranslate } from '../../i18n/index.js'
+import { haptic } from '../../services/haptics.js'
 import { newChat } from '../../services/chat/store.js'
 import { IconButton } from '../base/IconButton.js'
 import { openMobileSider } from '../sider/mobileSiderState.js'
@@ -15,7 +16,10 @@ export const MobileHeader = ({ title }: { title?: string }) => {
         tone="primary"
         icon={<IconMenuOutline20 />}
         aria-label={t('expandSiderbarButton')}
-        onClick={openMobileSider}
+        onClick={() => {
+          haptic()
+          openMobileSider()
+        }}
       />
       {title === undefined ? null : (
         <>

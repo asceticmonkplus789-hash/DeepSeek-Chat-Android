@@ -1,4 +1,6 @@
 import { useEffect } from 'react'
+import { App as CapacitorApp } from '@capacitor/app'
+import { isNative } from '../services/capacitor.js'
 import { useTranslate } from '../i18n/index.js'
 import { useSettings } from '../services/settings.js'
 import { useIsMobile, useMobileViewport, usePreventPageScroll } from './viewport.js'
@@ -10,11 +12,15 @@ import {
   useChatStore,
 } from '../services/chat/store.js'
 import { SearchPanel } from '../components/search/SearchPanel.js'
-import { closeSearchPanel } from '../components/search/searchPanelState.js'
+import { closeSearchPanel, useSearchPanel } from '../components/search/searchPanelState.js'
 import { SessionView } from '../components/session/SessionView.js'
 import { MobileHeader } from '../components/session/MobileHeader.js'
 import { Welcome } from '../components/session/Welcome.js'
-import { ensureApiKey } from '../components/settings/settingsDialogState.js'
+import {
+  closeSettings,
+  ensureApiKey,
+  useSettingsDialog,
+} from '../components/settings/settingsDialogState.js'
 import { SettingsDialog } from '../components/settings/SettingsDialog.js'
 import { Toast } from '../components/base/Toast.js'
 import { showToast } from '../components/base/toastState.js'
@@ -22,7 +28,7 @@ import { onUploadNotice } from '../services/attachments.js'
 import { Button } from '../components/base/Button.js'
 import { stopReadAloud } from '../services/speech/readAloud.js'
 import { CollapsedSider } from '../components/sider/CollapsedSider.js'
-import { closeMobileSider } from '../components/sider/mobileSiderState.js'
+import { closeMobileSider, useMobileSider } from '../components/sider/mobileSiderState.js'
 import { MobileSider, Sider } from '../components/sider/Sider.js'
 import styles from './App.module.css'
 
@@ -49,6 +55,9 @@ export const App = () => {
     state.activeId === null ? false : Object.hasOwn(state.streaming, state.activeId)
   )
   const activeId = useChatStore((state) => state.activeId)
+  // 视图切换 key：欢迎页 / 会话页 / 加载态之间切换时重放入场动画
+  const viewKey =
+    !ready || (activeId !== null && !session) ? 'loading' : session ? 'session' : 'welcome'
 
   usePreventPageScroll(isMobile)
 
@@ -66,6 +75,28 @@ export const App = () => {
   useEffect(stopReadAloud, [activeId])
   // 移动端选中会话、切换布局后收起抽屉
   useEffect(closeMobileSider, [activeId, isMobile])
+
+  // 安卓返回键：先关闭抽屉 / 设置 / 搜索结果面板，全部关闭后才退出应用
+  useEffect(() => {
+    if (!isNative()) {
+      return
+    }
+    const onBackButton = () => {
+      if (useSettingsDialog.getState().open) {
+        closeSettings()
+      } else if (useMobileSider.getState().open) {
+        closeMobileSider()
+      } else if (useSearchPanel.getState().entry !== null) {
+        closeSearchPanel()
+      } else {
+        void CapacitorApp.exitApp()
+      }
+    }
+    const registration = CapacitorApp.addListener('backButton', onBackButton)
+    return () => {
+      void registration.then((handle) => handle.remove())
+    }
+  }, [])
 
   useEffect(() => {
     void initChat()
@@ -93,7 +124,8 @@ export const App = () => {
           ) : null}
           <div className={styles.content}>
             {siderCollapsed ? <CollapsedSider /> : null}
-            {!ready || (activeId !== null && !session) ? (
+            <div key={viewKey} className={styles.viewTransition}>
+              {!ready || (activeId !== null && !session) ? (
               <div className={styles.loadingView}>
                 {isMobile ? <MobileHeader /> : null}
                 <div className={styles.loadingState} role="status" aria-live="polite">
@@ -128,6 +160,7 @@ export const App = () => {
             ) : (
               <Welcome />
             )}
+            </div>
           </div>
         </main>
         <SearchPanel />

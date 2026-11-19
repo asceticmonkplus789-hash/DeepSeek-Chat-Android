@@ -25,6 +25,7 @@ export const UserMessage = memo(function UserMessage({
   isFirst,
   isLast,
   busy,
+  entrance,
   versions,
   onSelectVersion,
 }: {
@@ -35,6 +36,8 @@ export const UserMessage = memo(function UserMessage({
   isFirst: boolean
   isLast: boolean
   busy: boolean
+  /** 首次出现时播放入场动画 */
+  entrance?: boolean
   versions: MessageVersions
   onSelectVersion: SelectMessageVersion
 }) {
@@ -61,7 +64,7 @@ export const UserMessage = memo(function UserMessage({
   }
 
   return (
-    <div className={clsx(styles.container, isFirst && styles.isFirst)}>
+    <div className={clsx(styles.container, isFirst && styles.isFirst, entrance && styles.entrance)}>
       {message.files.length > 0 ? (
         <div
           className={clsx(

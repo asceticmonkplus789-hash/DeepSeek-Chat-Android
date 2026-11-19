@@ -46,6 +46,18 @@ jobs:
         working-directory: android-wrap
         run: npx cap sync android
 
+      - name: Add VIBRATE permission for haptic feedback
+        working-directory: android-wrap
+        run: node add-vibrate.cjs
+
+      - name: Generate app icon and splash resources
+        working-directory: android-wrap
+        run: >-
+          npx capacitor-assets generate --android
+          --splashBackgroundColor '#ffffff'
+          --splashBackgroundColorDark '#151517'
+          --androidBackgroundColor '#ffffff'
+
       - name: Point Gradle at Android SDK
         working-directory: android-wrap
         run: echo "sdk.dir=$ANDROID_HOME" > android/local.properties

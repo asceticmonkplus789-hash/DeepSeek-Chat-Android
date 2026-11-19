@@ -48,6 +48,10 @@ export const MessageList = ({
   const stickyRef = useRef(true)
   const scrollTopRef = useRef(0)
   const restoreScrollRef = useRef<{ messageId: string; top: number } | null>(null)
+  const knownRef = useRef<{ sessionId: string; ids: Set<string> }>({
+    sessionId: '',
+    ids: new Set(),
+  })
   const messages = getVisibleMessages(session)
   const [previousVersions, setPreviousVersions] = useState(() =>
     buildMessageVersions(session, new Map())
@@ -140,6 +144,19 @@ export const MessageList = ({
   }, [isMobile, scrollToBottom])
 
   const lastIndex = messages.length - 1
+  // 消息入场动画：会话首帧的消息视为已知，之后新增的消息播放入场动画
+  const known = knownRef.current
+  const entranceIds = new Set<string>()
+  if (known.sessionId !== session.id) {
+    knownRef.current = { sessionId: session.id, ids: new Set(messages.map((message) => message.id)) }
+  } else {
+    for (const message of messages) {
+      if (!known.ids.has(message.id)) {
+        entranceIds.add(message.id)
+      }
+      known.ids.add(message.id)
+    }
+  }
   const uploadRetryId = getUploadRetryId(messages, streaming)
   return (
     <ScrollToBottomContext.Provider value={scrollToBottom}>
@@ -156,6 +173,7 @@ export const MessageList = ({
                   isFirst={index === 0}
                   isLast={index === lastIndex || index === lastIndex - 1}
                   busy={streaming}
+                  entrance={entranceIds.has(message.id)}
                   versions={versions.get(message.id) ?? EMPTY_VERSIONS}
                   onSelectVersion={selectVersion}
                 />
@@ -167,6 +185,7 @@ export const MessageList = ({
                   isLast={index === lastIndex}
                   streaming={streaming && index === lastIndex}
                   busy={streaming}
+                  entrance={entranceIds.has(message.id)}
                   versions={versions.get(message.id) ?? EMPTY_VERSIONS}
                   onSelectVersion={selectVersion}
                 />

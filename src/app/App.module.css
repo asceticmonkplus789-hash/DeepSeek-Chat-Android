@@ -20,6 +20,26 @@
   min-height: 0;
 }
 
+/* 欢迎页 / 会话页 / 加载态切换时的入场动画 */
+.viewTransition {
+  position: absolute;
+  inset: 0;
+  animation: viewIn 0.22s var(--ds-ease-out);
+}
+
+@keyframes viewIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .viewTransition {
+    animation: none;
+  }
+}
+
 .saveError {
   display: flex;
   align-items: center;

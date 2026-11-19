@@ -40,7 +40,10 @@ body[data-ds-dark-theme] {
 body.change-theme *,
 body.change-theme *::before,
 body.change-theme *::after {
-  transition: none !important;
+  transition:
+    background-color 0.3s var(--ds-ease-in-out), color 0.3s var(--ds-ease-in-out),
+    border-color 0.3s var(--ds-ease-in-out), box-shadow 0.3s var(--ds-ease-in-out),
+    opacity 0.3s var(--ds-ease-in-out) !important;
 }
 
 @media not all and (min-width: 768px) {

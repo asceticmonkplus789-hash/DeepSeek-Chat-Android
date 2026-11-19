@@ -32,6 +32,7 @@ export const AssistantMessage = memo(function AssistantMessage({
   isLast,
   streaming,
   busy,
+  entrance,
   versions,
   onSelectVersion,
 }: {
@@ -40,6 +41,8 @@ export const AssistantMessage = memo(function AssistantMessage({
   isLast: boolean
   streaming: boolean
   busy: boolean
+  /** 首次出现时播放入场动画 */
+  entrance?: boolean
   versions: MessageVersions
   onSelectVersion: SelectMessageVersion
 }) {
@@ -57,7 +60,7 @@ export const AssistantMessage = memo(function AssistantMessage({
   const waiting = streaming && view.steps.length === 0 && !view.answer && !message.thinking
   const summaryEntry = `${message.id}-summary`
   return (
-    <div className={styles.message}>
+    <div className={clsx(styles.message, entrance && styles.entrance)}>
       {refused ? null : (
         <ReplyArea
           message={message}

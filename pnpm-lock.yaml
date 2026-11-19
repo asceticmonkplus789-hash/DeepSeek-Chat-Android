@@ -8,6 +8,15 @@ importers:
 
   .:
     dependencies:
+      '@capacitor/app':
+        specifier: 6.0.3
+        version: 6.0.3(@capacitor/core@6.2.0)
+      '@capacitor/core':
+        specifier: 6.2.0
+        version: 6.2.0
+      '@capacitor/status-bar':
+        specifier: 6.0.3
+        version: 6.0.3(@capacitor/core@6.2.0)
       '@types/katex':
         specifier: ^0.16.5
         version: 0.16.8
@@ -104,6 +113,19 @@ packages:
 
   '@braintree/sanitize-url@7.1.2':
     resolution: {integrity: sha512-jigsZK+sMF/cuiB7sERuo9V7N9jx+dhmHHnQyDSVdpZwVutaBu7WvNYqMDLSgFgfB30n452TP3vjDAvFC973mA==}
+
+  '@capacitor/app@6.0.3':
+    resolution: {integrity: sha512-4gFUCbcVz0N/YYN32OBFerocWXslIv3Nc90gDiRsBkJc0plwK6kIUT6PKa5WtW2kfhteUeCVXQbvArH2fH+0Ug==}
+    peerDependencies:
+      '@capacitor/core': ^6.0.0
+
+  '@capacitor/core@6.2.0':
+    resolution: {integrity: sha512-B9IlJtDpUqhhYb+T8+cp2Db/3RETX36STgjeU2kQZBs/SLAcFiMama227o+msRjLeo3DO+7HJjWVA1+XlyyPEg==}
+
+  '@capacitor/status-bar@6.0.3':
+    resolution: {integrity: sha512-nFlgSmtx6Zwaw0tEvZgQsWHBeOfWWB/AvEoCApopLT4mHkBVoSrwkLvy2PjZs5wxCbsmqvQczr3XCyTwaDZVQg==}
+    peerDependencies:
+      '@capacitor/core': ^6.0.0
 
   '@chevrotain/cst-dts-gen@11.0.3':
     resolution: {integrity: sha512-BvIKpRLeS/8UbfxXxgC33xOumsacaeCKAjAeLyOn7Pcp95HiRbrpl14S+9vaZLolnbssPIUuiUd8IvgkRyt6NQ==}
@@ -1362,6 +1384,18 @@ snapshots:
   '@antfu/utils@8.1.1': {}
 
   '@braintree/sanitize-url@7.1.2': {}
+
+  '@capacitor/app@6.0.3(@capacitor/core@6.2.0)':
+    dependencies:
+      '@capacitor/core': 6.2.0
+
+  '@capacitor/core@6.2.0':
+    dependencies:
+      tslib: 2.9.1
+
+  '@capacitor/status-bar@6.0.3(@capacitor/core@6.2.0)':
+    dependencies:
+      '@capacitor/core': 6.2.0
 
   '@chevrotain/cst-dts-gen@11.0.3':
     dependencies:
