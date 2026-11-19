@@ -20,7 +20,7 @@
 
 ## 获取 APK
 
-1. 打开 [Build Android APK 的 Actions 记录](https://github.com/asceticmonkplus789-hash/chat-demo-android/actions/workflows/build-apk.yml)。
+1. 打开 [Build Android APK 的 Actions 记录](https://github.com/asceticmonkplus789-hash/DeepSeek-Chat-Android/actions/workflows/build-apk.yml)。
 2. 选择目标提交对应的绿色运行。冷启动修复版为 `7dc302a`。
 3. 在运行底部的 **Artifacts** 下载 `chatdemo-debug-apk`，解压取得 `app-debug.apk`。
 4. 传到安卓手机，按系统提示允许对应来源安装。
@@ -46,8 +46,8 @@ API Key 和设置存于 localStorage，会话与附件原件存于 IndexedDB。�
 已验证的本地环境为 Node.js 24.21.0、pnpm 9.15.9。现有 CI 使用 Node.js 20、pnpm 9 和 JDK 17。
 
 ```sh
-git clone --branch ui-optimize https://github.com/asceticmonkplus789-hash/chat-demo-android.git
-cd chat-demo-android
+git clone --branch ui-optimize https://github.com/asceticmonkplus789-hash/DeepSeek-Chat-Android.git
+cd DeepSeek-Chat-Android
 npx pnpm@9.15.9 install --frozen-lockfile
 npx pnpm@9.15.9 dev
 ```

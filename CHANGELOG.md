@@ -11,7 +11,7 @@
 
 GitHub Actions 构建成功。使用者反馈本版本冷启动显示问题已解决，反馈日期为 2026-11-19。该反馈未说明手机型号与安卓版本，后续可补充设备信息。
 
-[构建记录](https://github.com/asceticmonkplus789-hash/chat-demo-android/actions/runs/44494415053)。
+[构建记录](https://github.com/asceticmonkplus789-hash/DeepSeek-Chat-Android/actions/runs/44494415053)。
 
 ## 2026-11-19 · 2a454f8 · 图标与简洁风格
 
@@ -21,7 +21,7 @@ GitHub Actions 构建成功。使用者反馈本版本冷启动显示问题已�
 
 类型检查、网页生产构建、安卓资源预检和云端 APK 构建通过。手机随后报告冷启动有标题与图形显示异常，由 `7dc302a` 修复。
 
-[构建记录](https://github.com/asceticmonkplus789-hash/chat-demo-android/actions/runs/44489637101)。
+[构建记录](https://github.com/asceticmonkplus789-hash/DeepSeek-Chat-Android/actions/runs/44489637101)。
 
 ## 交接基线 · 5d30324
 

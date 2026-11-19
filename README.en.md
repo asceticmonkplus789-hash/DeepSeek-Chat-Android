@@ -18,7 +18,7 @@ On November 19, 2026, commit `7dc302a` passed the cloud APK build, and the user 
 
 ## Download and install
 
-Open [Build Android APK](https://github.com/asceticmonkplus789-hash/chat-demo-android/actions/workflows/build-apk.yml), select a successful run for the intended commit, download the `chatdemo-debug-apk` artifact, and extract `app-debug.apk`. Transfer it to Android and allow installation from the relevant source when prompted. Artifact downloads generally require GitHub sign-in. Availability follows the retention shown on GitHub.
+Open [Build Android APK](https://github.com/asceticmonkplus789-hash/DeepSeek-Chat-Android/actions/workflows/build-apk.yml), select a successful run for the intended commit, download the `chatdemo-debug-apk` artifact, and extract `app-debug.apk`. Transfer it to Android and allow installation from the relevant source when prompted. Artifact downloads generally require GitHub sign-in. Availability follows the retention shown on GitHub.
 
 **Back up before updating.** The workflow has no persistent signing key, and the delivered builds have different signing certificates. Android generally rejects an in-place update with a different certificate. Export conversations and separately save the API key, settings and important original attachments before deciding to uninstall. Uninstalling clears local app data.
 
@@ -35,8 +35,8 @@ The API key and settings use localStorage. Conversations and original attachment
 The verified local toolchain is Node.js 24.21.0 with pnpm 9.15.9. The current workflow uses Node.js 20, pnpm 9 and JDK 17.
 
 ```sh
-git clone --branch ui-optimize https://github.com/asceticmonkplus789-hash/chat-demo-android.git
-cd chat-demo-android
+git clone --branch ui-optimize https://github.com/asceticmonkplus789-hash/DeepSeek-Chat-Android.git
+cd DeepSeek-Chat-Android
 npx pnpm@9.15.9 install --frozen-lockfile
 npx pnpm@9.15.9 dev
 ```
