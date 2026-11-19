@@ -1,75 +1,75 @@
-# chat-demo
+# DeepSeek Chat · Android
 
-English | [简体中文](README.zh-CN.md)
+<img src="android-wrap/assets/icon.png" width="88" alt="DeepSeek Chat 应用图标" />
 
-A static chat demo powered by the DeepSeek API. No application backend is required: the browser connects directly to the configured API service.
+简体中文 | [English](README.en.md)
 
-You can [try the app online](https://deepseek-ai.github.io/chat-demo/) or download the archive from [Releases](https://github.com/deepseek-ai/deepseek-chat-demo/releases), extract it, and double-click `index.html` to use it locally without installation or a build. Enter your API key in Settings before your first chat.
+基于 [DeepSeek 官方 chat-demo](https://github.com/deepseek-ai/chat-demo) v0.1.1 的安卓适配项目。使用 React、TypeScript 和 Capacitor 6，将静态聊天应用打包为可安装的 APK。应用直接连接配置的 API 服务，API Key 由使用者在应用中填写。
 
-## Getting started
+本仓库维护安卓封装及界面适配，开发分支为 `ui-optimize`。应用名称为 **DeepSeek Chat**，包名为 `com.example.chatdemo`。当前交付使用 debug 签名，适合自行侧载测试。
 
-Install Node.js 22.12+ and pnpm, then run:
+## 当前进展
+
+- 官方简洁界面，支持浅色、深色及跟随系统主题。
+- 安卓返回键依次关闭设置、侧边抽屉和搜索面板，再退出应用。
+- 状态栏颜色同步、发送与打开抽屉的触感反馈、减少动态效果适配。
+- 触屏设备直接显示历史消息操作按钮。
+- Harness 风格桌面图标，冷启动使用纯白背景、居中鲸鱼及无标题栏过渡。
+
+2026-11-19，`7dc302a` 已通过云端 APK 构建，使用者反馈冷启动显示问题已解决。该反馈仅覆盖本次冷启动问题，其他功能和不同设备的验证进度见 [版本记录](CHANGELOG.md)。
+
+## 获取 APK
+
+1. 打开 [Build Android APK 的 Actions 记录](https://github.com/asceticmonkplus789-hash/chat-demo-android/actions/workflows/build-apk.yml)。
+2. 选择目标提交对应的绿色运行。冷启动修复版为 `7dc302a`。
+3. 在运行底部的 **Artifacts** 下载 `chatdemo-debug-apk`，解压取得 `app-debug.apk`。
+4. 传到安卓手机，按系统提示允许对应来源安装。
+
+下载 Actions artifact 通常需要登录 GitHub。可下载期限以运行页面为准。上游的在线演示与 Releases 对应上游网页版本，本仓库安卓 APK 通过上述构建产物获取。
+
+**更新前请先备份。** 当前云端没有配置持久化签名密钥，已交付的不同构建证书不同，安卓通常会拒绝覆盖安装。先导出聊天历史，单独保存 API Key、设置和重要附件原件，确认备份后再决定卸载旧版。卸载会清除应用本地数据。后续稳定更新需要持续使用同一签名密钥。
+
+## 首次使用
+
+进入设置的数据管理，输入自己的 DeepSeek API Key，再开始聊天。API 请求使用该 Key，费用与服务能力以所使用的 API 服务为准。
+
+现有聊天功能包括多会话与消息分支、流式回答、深度思考、智能搜索、链接引用、附件、语音输入与朗读，以及 Markdown、代码高亮、KaTeX 和 Mermaid 展示。搜索、文件、语音等功能依赖相应服务端接口支持，需分别验证。
+
+## 数据与备份
+
+API Key 和设置存于 localStorage，会话与附件原件存于 IndexedDB。聊天、上传和语音请求会将相应内容发送到配置的 API 服务。
+
+历史导出包含会话与本地可用的图片原件。API Key、应用设置和非图片附件原件需要单独保存。导入在确认和校验成功后替换本地会话与附件。详细范围见 [数据与安全说明](docs/DATA.md) 和 [历史归档格式](src/services/chat/history/README.md)。
+
+## 本地开发
+
+已验证的本地环境为 Node.js 24.21.0、pnpm 9.15.9。现有 CI 使用 Node.js 20、pnpm 9 和 JDK 17。
 
 ```sh
-git clone https://github.com/deepseek-ai/chat-demo.git
-cd chat-demo
-pnpm install
-pnpm dev
+git clone --branch ui-optimize https://github.com/asceticmonkplus789-hash/chat-demo-android.git
+cd chat-demo-android
+npx pnpm@9.15.9 install --frozen-lockfile
+npx pnpm@9.15.9 dev
 ```
 
-Open http://localhost:8090.
+打开 http://localhost:8090 。开发、Windows 构建、安卓生成目录与冷启动补丁的顺序见 [开发与构建指引](docs/DEVELOPMENT.md)。
 
-To build the static site:
+## 工程导航
 
-```sh
-pnpm build
-```
+| 位置 | 用途 |
+|---|---|
+| `src/` | 聊天网页源码、状态和本地数据管理 |
+| `android-wrap/` | Capacitor 配置、应用素材和安卓生成补丁 |
+| `.github/workflows/build-apk.yml` | 从源码构建网页和 debug APK |
+| `docs/DEVELOPMENT.md` | 开发、构建和手机验收 |
+| `docs/DATA.md` | 数据保存、导入导出和问题反馈 |
+| `CHANGELOG.md` | 安卓适配版本与验证记录 |
+| `THIRD_PARTY_NOTICES.md` | 上游、图标来源及依赖说明 |
 
-The output is written to `dist/`. Deploy it to a static web server or open `dist/index.html` directly. Opening the file directly requires browser support for storage on `file://` pages and an API service that permits their cross-origin requests.
+`main` 保留早期静态产物封装版本，`v0.1.1` 保留初版归档。本仓库的旧版标签与上游同名源码标签含义不同。
 
-## Features
+## 来源与许可
 
-- Multiple conversations with automatic titles, renaming, and deletion; edit prompts, regenerate replies, and switch between message branches.
-- Streaming replies, deep thinking, smart search, link reading, and source citations; stop generation or continue eligible replies.
-- Upload, paste, or drag and drop attachments; use voice input and read replies aloud. A live audio spectrum appears in the first row of the input area while recording on mobile.
-- Markdown, syntax highlighting, KaTeX math, and Mermaid diagrams.
-- Simplified Chinese and English, light and dark themes, mobile layouts, location settings, and chat history import and export.
+网页源码来自 DeepSeek chat-demo。图标及冷启动鲸鱼形状参考 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)，本仓库为个人安卓适配项目。来源版本、素材链接与第三方说明见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
 
-## Data and storage
-
-Your API key and settings are stored in the browser's localStorage. Conversations and original attachments are stored in IndexedDB. Local data is isolated by browser profile and site origin. Sending messages, uploading attachments, and using speech features sends the relevant content to the configured API service.
-
-History import and export in Settings use ZIP archives. After confirmation and successful validation, importing replaces all local conversations and attachments. Exports include conversations and locally available original images, but exclude API keys, settings, and original non-image attachments. See the [history import/export documentation (Chinese)](src/services/chat/history/README.md) for the archive format and preservation details.
-
-Settings → Data → Delete all chats clears all local conversations, original attachments, and unsent drafts after confirmation. It stops ongoing replies and returns to a new chat. Your API key and settings are preserved; files already uploaded to the API service are not deleted.
-
-## Development
-
-| Command       | Description                  |
-| ------------- | ---------------------------- |
-| `pnpm dev`    | Start the development server |
-| `pnpm build`  | Build into `dist/`           |
-| `pnpm type`   | Run TypeScript type checks   |
-| `pnpm lint`   | Lint with oxlint             |
-| `pnpm format` | Format with oxfmt            |
-
-[rspack.config.ts](rspack.config.ts) uses `https://api.deepseek.com` by default. Use `createConfig({ apiOrigin, devServer })` to customize the API origin and development server proxy.
-
-Chat uses `deepseek-flash` by default through Anthropic-compatible Messages / Files APIs. Speech features use ASR / TTS endpoints. Requests include extensions for search, link reading, titles, and `latest_reminder`, so the configured service must support the corresponding capabilities. Supported attachment formats are determined by server-side validation.
-
-```text
-src/
-  app/                 Application layout, themes, and global styles
-  components/          Chat, settings, Markdown, and other UI components
-  i18n/                English and Chinese translations
-  services/
-    api/               API requests, SSE, and protocol types
-    chat/              Conversations, message branches, storage, and history import/export
-    markdown/          Markdown parsing, syntax highlighting, and diagrams
-    speech/            Audio recording and read-aloud playback
-  utils/               Shared utilities
-```
-
-## License
-
-[MIT](LICENSE). The build copies the license to `dist/LICENSE`; include it when distributing the app. Third-party dependencies are subject to their own licenses.
+源码沿用 [MIT License](LICENSE)，保留上游版权信息。分发网页或 APK 时应保留相关许可和第三方说明。
