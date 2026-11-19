@@ -56,7 +56,8 @@ jobs:
           npx capacitor-assets generate --android
           --splashBackgroundColor '#ffffff'
           --splashBackgroundColorDark '#151517'
-          --androidBackgroundColor '#ffffff'
+          --iconBackgroundColor '#ffffff'
+          --iconBackgroundColorDark '#ffffff'
 
       - name: Point Gradle at Android SDK
         working-directory: android-wrap
