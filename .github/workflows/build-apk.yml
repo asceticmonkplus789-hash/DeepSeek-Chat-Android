@@ -59,6 +59,10 @@ jobs:
           --iconBackgroundColor '#ffffff'
           --iconBackgroundColorDark '#ffffff'
 
+      - name: Configure white launch screen and remove title bar
+        working-directory: android-wrap
+        run: node configure-launch.cjs
+
       - name: Point Gradle at Android SDK
         working-directory: android-wrap
         run: echo "sdk.dir=$ANDROID_HOME" > android/local.properties
