@@ -1,5 +1,15 @@
 node_modules/
-android/
 dist/
+build/
+.pnpm-store/
+.cache/
 *.log
 .DS_Store
+.env
+.env.*
+!.env.example
+tmp/
+
+# Android wrapper (Capacitor)
+android-wrap/node_modules/
+android-wrap/android/
